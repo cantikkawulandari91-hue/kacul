@@ -1,0 +1,476 @@
+<html lang="id"><head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style>
+              body { 
+                margin: 0; 
+                padding: 16px; 
+                background-color: #ffffff;
+              }
+            </style>
+          </head>
+          <body>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kalkulator Modern</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .calculator-container {
+            background: rgba(28, 28, 28, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .display {
+            background: #1C1C1C;
+            padding: 30px 20px;
+            text-align: right;
+            border-bottom: 2px solid #333;
+        }
+
+        .display-text {
+            color: white;
+            font-size: 3.5rem;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            min-height: 70px;
+        }
+
+        .mode-indicator {
+            color: #ADD8E6;
+            font-size: 0.9rem;
+            text-align: right;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            padding: 20px;
+        }
+
+        .btn {
+            height: 80px;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-number {
+            background: #323232;
+            color: white;
+        }
+
+        .btn-number:hover {
+            background: #404040;
+        }
+
+        .btn-operator {
+            background: #FF9500;
+            color: white;
+        }
+
+        .btn-operator:hover {
+            background: #ffaa33;
+        }
+
+        .btn-function {
+            background: #ADD8E6;
+            color: #1C1C1C;
+        }
+
+        .btn-function:hover {
+            background: #c0e0ed;
+        }
+
+        .btn-equals {
+            background: #FF9500;
+            color: white;
+        }
+
+        .btn-equals:hover {
+            background: #ffaa33;
+        }
+
+        /* MODIFIKASI: tombol 0 hanya selebar 1 kolom dan border-radius bulat */
+        .btn-zero {
+            /* grid-column: span 2;  dihapus agar tombol 0 selebar tombol lain */
+            border-radius: 50%;
+        }
+
+        .app-info {
+            text-align: center;
+            padding: 15px;
+            color: white;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #FF9500, #FF6B6B);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                height: 70px;
+                font-size: 1.5rem;
+            }
+
+            .display-text {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .btn {
+                height: 60px;
+                font-size: 1.3rem;
+            }
+
+            .buttons-grid {
+                gap: 8px;
+                padding: 15px;
+            }
+        }
+    </style>
+
+
+    <div class="calculator-container">
+        <div class="display">
+            <div class="mode-indicator" id="modeIndicator">Mode: Angka</div>
+            <div class="display-text" id="display">0</div>
+        </div>
+
+        <div class="buttons-grid">
+            <!-- Baris 1 -->
+            <button class="btn btn-function" onclick="handleButtonClick('AC')">AC</button>
+            <button class="btn btn-function" onclick="handleButtonClick('C')">C</button>
+            <button class="btn btn-function" onclick="handleButtonClick('+/-')">+/-</button>
+            <button class="btn btn-function" onclick="handleButtonClick('ROM')">ROM</button>
+
+            <!-- Baris 2 -->
+            <button class="btn btn-number" onclick="handleButtonClick('7')">7</button>
+            <button class="btn btn-number" onclick="handleButtonClick('8')">8</button>
+            <button class="btn btn-number" onclick="handleButtonClick('9')">9</button>
+            <button class="btn btn-operator" onclick="handleButtonClick('÷')">÷</button>
+
+            <!-- Baris 3 -->
+            <button class="btn btn-number" onclick="handleButtonClick('4')">4</button>
+            <button class="btn btn-number" onclick="handleButtonClick('5')">5</button>
+            <button class="btn btn-number" onclick="handleButtonClick('6')">6</button>
+            <button class="btn btn-operator" onclick="handleButtonClick('×')">×</button>
+
+            <!-- Baris 4 -->
+            <button class="btn btn-number" onclick="handleButtonClick('1')">1</button>
+            <button class="btn btn-number" onclick="handleButtonClick('2')">2</button>
+            <button class="btn btn-number" onclick="handleButtonClick('3')">3</button>
+            <button class="btn btn-operator" onclick="handleButtonClick('-')">-</button>
+
+            <!-- Baris 5 -->
+            <button class="btn btn-number btn-zero" onclick="handleButtonClick('0')">0</button>
+            <button class="btn btn-number" onclick="handleButtonClick('.')">.</button>
+            <button class="btn btn-equals" onclick="handleButtonClick('=')">=</button>
+            <button class="btn btn-operator" onclick="handleButtonClick('+')">+</button>
+        </div>
+
+        <div class="app-info">
+            <h3>Kalkulator Modern</h3>
+            <p>Dukung angka dan angka Romawi</p>
+            <button class="download-btn" onclick="downloadApp()">📥 Download Aplikasi</button>
+        </div>
+    </div>
+
+    <script>
+        let currentDisplay = "0";
+        let storedValue = null;
+        let currentOperator = null;
+        let romanMode = false;
+        const MAX_DISPLAY_LENGTH = 20;
+
+        const displayElement = document.getElementById('display');
+        const modeIndicator = document.getElementById('modeIndicator');
+
+        function updateDisplay(text) {
+            if (text.length > MAX_DISPLAY_LENGTH) {
+                text = text.substring(text.length - MAX_DISPLAY_LENGTH);
+            }
+            displayElement.textContent = text;
+            currentDisplay = text;
+        }
+
+        function toRoman(num) {
+            if (!Number.isInteger(num) || num <= 0 || num > 3999) {
+                return null;
+            }
+
+            const romanNumerals = [
+                ["M", 1000], ["CM", 900], ["D", 500], ["CD", 400],
+                ["C", 100], ["XC", 90], ["L", 50], ["XL", 40],
+                ["X", 10], ["IX", 9], ["V", 5], ["IV", 4],
+                ["I", 1]
+            ];
+
+            let result = "";
+            for (const [roman, value] of romanNumerals) {
+                while (num >= value) {
+                    result += roman;
+                    num -= value;
+                }
+            }
+            return result;
+        }
+
+        function fromRoman(roman) {
+            roman = roman.toUpperCase();
+            const romanValues = {
+                'M': 1000, 'D': 500, 'C': 100, 'L': 50,
+                'X': 10, 'V': 5, 'I': 1
+            };
+
+            let total = 0;
+            let previousValue = 0;
+
+            for (let i = roman.length - 1; i >= 0; i--) {
+                const currentChar = roman[i];
+                const currentValue = romanValues[currentChar] || 0;
+
+                if (currentValue < previousValue) {
+                    total -= currentValue;
+                } else {
+                    total += currentValue;
+                }
+                previousValue = currentValue;
+            }
+
+            return total;
+        }
+
+        function formatResult(value) {
+            if (romanMode) {
+                const num = Math.round(value);
+                const roman = toRoman(num);
+                return roman || "Undefined";
+            } else {
+                // Hilangkan .0 jika angka bulat
+                return value % 1 === 0 ? value.toString() : value.toFixed(6).replace(/\.?0+$/, "");
+            }
+        }
+
+        function clearAll() {
+            storedValue = null;
+            currentOperator = null;
+            updateDisplay("0");
+        }
+
+        function handleButtonClick(value) {
+            const operators = ["+", "-", "×", "÷", "="];
+            const functions = ["AC", "C", "+/-", "ROM"];
+
+            if (functions.includes(value)) {
+                handleFunctionButton(value);
+            } else if (operators.includes(value)) {
+                handleOperatorButton(value);
+            } else {
+                handleNumberButton(value);
+            }
+        }
+
+        function handleFunctionButton(value) {
+            switch (value) {
+                case "AC":
+                    clearAll();
+                    break;
+
+                case "C":
+                    if (currentDisplay !== "0" && currentDisplay !== "Undefined") {
+                        const newText = currentDisplay.slice(0, -1);
+                        updateDisplay(newText || "0");
+                    }
+                    break;
+
+                case "+/-":
+                    if (currentDisplay.startsWith("-")) {
+                        updateDisplay(currentDisplay.substring(1));
+                    } else if (currentDisplay !== "0") {
+                        updateDisplay("-" + currentDisplay);
+                    }
+                    break;
+
+                case "ROM":
+                    romanMode = !romanMode;
+                    modeIndicator.textContent = `Mode: ${romanMode ? 'Romawi' : 'Angka'}`;
+
+                    if (romanMode) {
+                        // Konversi ke Romawi
+                        try {
+                            const num = parseFloat(currentDisplay);
+                            if (Number.isInteger(num) && num > 0 && num <= 3999) {
+                                updateDisplay(toRoman(num));
+                            } else {
+                                updateDisplay("Undefined");
+                            }
+                        } catch {
+                            updateDisplay("Undefined");
+                        }
+                    } else {
+                        // Konversi ke Angka
+                        try {
+                            const num = fromRoman(currentDisplay);
+                            updateDisplay(num.toString());
+                        } catch {
+                            updateDisplay("0");
+                        }
+                    }
+                    break;
+            }
+        }
+
+        function handleOperatorButton(operator) {
+            if (operator === "=") {
+                performCalculation();
+            } else {
+                if (currentOperator !== null) {
+                    performCalculation();
+                }
+                storedValue = parseFloat(currentDisplay);
+                currentOperator = operator;
+                updateDisplay(currentDisplay + " " + operator + " ");
+            }
+        }
+
+        function handleNumberButton(value) {
+            if (romanMode && value === ".") {
+                return; // Abaikan titik dalam mode Romawi
+            }
+
+            if (currentDisplay === "0" || currentDisplay === "Undefined") {
+                updateDisplay(value);
+            } else if (currentOperator && currentDisplay.includes(currentOperator)) {
+                updateDisplay(currentDisplay + value);
+            } else {
+                updateDisplay(currentDisplay + value);
+            }
+        }
+
+        function performCalculation() {
+            if (currentOperator && storedValue !== null) {
+                const expression = currentDisplay;
+                const parts = expression.split(currentOperator);
+                const secondValue = parseFloat(parts[parts.length - 1].trim());
+
+                if (isNaN(secondValue)) {
+                    updateDisplay("Undefined");
+                    return;
+                }
+
+                let result;
+                switch (currentOperator) {
+                    case "+":
+                        result = storedValue + secondValue;
+                        break;
+                    case "-":
+                        result = storedValue - secondValue;
+                        break;
+                    case "×":
+                        result = storedValue * secondValue;
+                        break;
+                    case "÷":
+                        if (secondValue === 0) {
+                            updateDisplay("Undefined");
+                            clearAll();
+                            return;
+                        }
+                        result = storedValue / secondValue;
+                        break;
+                }
+
+                updateDisplay(formatResult(result));
+                storedValue = null;
+                currentOperator = null;
+            }
+        }
+
+        function downloadApp() {
+            // Simpan file HTML sebagai aplikasi
+            const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Kalkulator-Modern.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert('Aplikasi berhasil diunduh! Buka file HTML di browser mana saja.');
+        }
+
+        // Tambahkan event listener untuk keyboard support
+        document.addEventListener('keydown', function (event) {
+            const key = event.key;
+            const validKeys = {
+                '0': '0', '1': '1', '2': '2', '3': '3', '4': '4',
+                '5': '5', '6': '6', '7': '7', '8': '8', '9': '9',
+                '.': '.', '+': '+', '-': '-', '*': '×', '/': '÷',
+                'Enter': '=', 'Escape': 'AC', 'Backspace': 'C'
+            };
+
+            if (validKeys[key]) {
+                handleButtonClick(validKeys[key]);
+                event.preventDefault();
+            }
+        });
+    </script>
+
+
+
+        
+      </body></html>
